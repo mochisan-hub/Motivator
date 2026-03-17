@@ -1,0 +1,21 @@
+<div class="container">
+        <div class="row">
+            <div class="col-6 mx-auto">
+                <h2 class="mb-3">投稿を編集</h2>
+                <%= form_with model: @post, url: public_post_path(@post), method: :patch do |f| %>
+                    <div>
+                        <%= f.label :image, "投稿画像", class: "form-label" %>
+                        <%= f.file_field :image, accept: "image/*", class: "form-control-file mb-3" %>
+                    </div>
+                    <div>   
+                        <%= f.label :content, "投稿文", class: "form-label" %>
+                        <%= f.text_area :content, class:"form-control mb-3" %>
+                    </div>
+                    <div>
+                        <%= link_to "back", public_user_path(current_user), class: "btn btn-outline-dark me-2"  %>
+                        <%= f.submit "update", class: "btn btn-outline-dark" %>
+                    </div>
+                <% end %>
+            </div>
+        </div>
+    </div>        

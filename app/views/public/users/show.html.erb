@@ -1,0 +1,35 @@
+<div class="container mt-0">
+
+    <div class="row justify-content-center align-items-center mb-4">
+        <div class="col-auto">
+            <%= image_tag @user.get_profile_image(150,150), class: "rounded-circle bg-secondary", style: "width: 150px; height: 150px;" %>
+        </div>
+        <div class="col-auto">
+            <strong><%= current_user.name %></strong>
+            <% @user.profile_statement %>
+        </div>
+    </div>
+    <div class="row justify-content-center">
+        <div class="col-auto">
+            <% if @user == current_user %>
+                <%= link_to "edit", edit_public_user_path(@user), class: "btn btn-outline-dark" %>
+            <% end %>
+            <% if @user == current_user %>
+                <%= link_to "カレンダー", public_plans_path, class: "btn btn-outline-dark" %>
+            <% end %>
+        </div>
+    </div>
+
+        <div class="row">
+            <% @user.posts.each do |post| %>
+                <div class="col-4 mb-4 ">
+                    <%= link_to public_post_path(post) do %>
+                        <div class="card">
+                            <%= image_tag post.get_image, class: "card-img-top img-fluid", style: "height: 250px; object-fit: cover;" %>
+                        </div>
+                    <% end %>
+                </div>
+            <% end %>
+        </div>    
+
+</div>

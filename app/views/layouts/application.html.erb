@@ -6,11 +6,64 @@
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
-    <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <script src="https://kit.fontawesome.com/519eafecd6.js" crossorigin="anonymous"></script>
+    <%= stylesheet_pack_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
 
   <body>
-    <%= yield %>
+    <div class="container-fluid">
+      <div class="row">
+        <aside class="col-1 vh-100 bg-dark position-fixed">
+          <a class = "navbar-brand" href="<%= root_path%>">Motivator</a>
+          <ul class="list-unstyled">
+            <li class="mb-4">
+              <%= link_to root_path do %>
+                <i class="fa-solid fa-house"></i>
+              <% end %> 
+            </li>
+            <li class="mb-4">
+              <%= link_to search_public_posts_path do %>
+                <i class="fa-solid fa-magnifying-glass"></i>
+              <% end %> 
+            </li>
+            <li class="mb-4">
+              <%= link_to new_public_post_path do %>
+                <i class="fa-solid fa-plus"></i>
+              <% end %> 
+            </li>
+            <li class="mb-4">
+              <%= link_to public_favorites_index_path do %>
+                <i class="fa-solid fa-heart"></i>
+              <% end %> 
+            </li>
+            <li class="mb-4">
+              <% if user_signed_in? %>
+                <%= link_to public_user_path(current_user) do %>
+                  <i class="fa-solid fa-user"></i>
+                <% end %> 
+              <% else %>
+                <%= link_to new_user_session_path do %>
+                  <i class="fa-solid fa-user"></i>
+                <% end %>
+               <% end %> 
+            </li>
+            <li class="mb-4">
+              <%= link_to public_homes_about_path do %>
+                <i class="fa-solid fa-compass"></i>
+              <% end %> 
+            </li>
+          </ul>
+        </aside>
+        <div class="col-11 offset-1 px-0">
+          <%= render "layouts/navigation" %>
+          <main>
+            <div class="container mt-4">
+              <%= yield %>
+            </div>
+          </main>
+        </div>
+      </div>
+    </div>
   </body>
 </html>

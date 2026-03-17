@@ -1,0 +1,55 @@
+<% if @posts.present? %>
+
+  <% @posts.each do |post| %>
+
+    <div class="card mb-4 shadow-sm mx-auto" style="max-width: 450px;">
+
+      <div class="card-header bg-white d-flex align-items-center justify-content-between border-0 py-3">
+        <div class="d-flex align-items-center">
+          <div class="rounded-circle bg-secondary" style="width: 40px; height: 40px;"></div>
+          <strong class="ms-3"><%= post.user.name %></strong>
+        </div>
+
+        <% if post.user == current_user %>
+          <div class="dropdown">
+            <button class="btn btn-link text-dark p-0" type="button" data-toggle="dropdown" aria-expanded="false">
+              <i class="fa-solid fa-ellipsis-vertical" style="font-size: 1.2rem; "></i>
+            </button>
+            <ul class="dropdown-menu dropdown-menu-end shadow-sm">
+              <li>
+                <%= link_to "edit", edit_public_post_path(post.id), class: "dropdown-item" %>
+              </li>
+              <li>
+                <%= link_to "destroy", public_post_path(post.id), method: :delete, class: "dropdown-item" %>
+              </li>
+            </ul>
+          </div>
+        <% end %>
+      </div>
+
+      <div class="card-body p-0">
+          <%= image_tag post.get_image, class: "img-fluid w-100" %>
+      </div>
+
+      <div class="card-body py-3">
+          <i class="fa-regular fa-heart" style="font-size: 1.5rem;" ></i> <i class="fa-regular fa-comment" style="font-size: 1.5rem;" ></i>
+      </div>  
+
+      <div class="card-body py-3">
+        <p class="card-text">
+          <strong><%= post.user.name %></strong> 
+          <%= simple_format(post.content, {}, wrapper_tag: "span") %>
+        </p>
+      </div>
+
+    </div>
+
+  <% end %>  
+
+<% else %>
+  <p class="text-cnter">まだ投稿がありません。ユーザーをフォローしましょう！</p>
+
+<% end %>
+
+
+
