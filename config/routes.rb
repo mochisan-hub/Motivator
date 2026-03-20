@@ -20,6 +20,7 @@ Rails.application.routes.draw do
     resources :posts do
       get :search, on: :collection
       resources :post_comments, only: [:create, :destroy]
+      resource :favorite, only: [:create, :destroy]
     end
   end
   namespace :public do

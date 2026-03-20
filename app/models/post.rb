@@ -4,6 +4,12 @@ class Post < ApplicationRecord
     has_many :training_details, dependent: :destroy
     accepts_nested_attributes_for :training_details, allow_destroy: true
     has_many :post_comments, dependent: :destroy
+    has_many :favorites, dependent: :destoroy
+
+    def favorite_by?(user)
+        favorites.exists?(user_id: user.id)
+    end
+
     
     def get_image
         unless image.attached?
