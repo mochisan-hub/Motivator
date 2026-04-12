@@ -37,7 +37,7 @@ class DeviseCreateUsers < ActiveRecord::Migration[6.1]
 
       t.string :name
       t.text :profile_statement
-      t.integer :membership_states
+      t.integer :membership_states, null: false, default: 0
 
     end
 

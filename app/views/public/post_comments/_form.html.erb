@@ -1,0 +1,4 @@
+<%= form_with model: [:public, post, post_comment] do |f| %>
+  <%= f.text_area :comment, placeholder: "コメントを書いてね", rows: 5, class: "form-control" %>
+  <%= f.submit "登録", class: "btn btn-primary" %>
+<% end %>

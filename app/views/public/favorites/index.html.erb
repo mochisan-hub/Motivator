@@ -1,2 +1,14 @@
-<h1>Public::Favorites#index</h1>
-<p>Find me in app/views/public/favorites/index.html.erb</p>
+<%# app/views/public/users/favorites.html.erb %>
+<h1 class="text-center">いいねした投稿</h1>
+
+<div class="row row-cols-3 g-1">
+  <% @favorite_posts.each do |post| %>
+      <div class="col">
+        <%= link_to public_post_path(post) do %>
+          <div class="ratio ratio-1x1">
+            <%= image_tag post.get_image, class: "img-fluid object-fit-cover w-100 h-100", style: "border-radius: 2px;" %>
+          </div>
+        <% end %>
+      </div>
+  <% end %>
+</div>

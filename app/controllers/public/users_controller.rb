@@ -1,4 +1,7 @@
 class Public::UsersController < ApplicationController
+  before_action :authenticate_user!
+  before_action :correct_user, only: [:edit, :update, :ddestroy]
+
   def index
     @user = User.all
   end
@@ -19,14 +22,22 @@ class Public::UsersController < ApplicationController
     else
       render "public/users/edit"
     end
-  end
+  end 
 
   def destroy
     @user = User.find(params[:id])
   end
 
+  private
+
   def user_params
     params.require(:user).permit(:name, :profile_statement, :profile_images)
   end
 
+  def correct_user
+    @user = User.find_by_id(params[:id])
+    if !(@user && @user == current_user)
+      redirect_to root_path
+    end
+  end
 end

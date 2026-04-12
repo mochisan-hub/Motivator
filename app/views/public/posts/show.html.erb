@@ -1,29 +1,49 @@
-<div class = "container">
-    <div class = "row">
-        <div class = "col-7">
-            <%= image_tag @post.get_image %>
+<div class = "container mt-4">
+    <div class = "row card-shadow-sm mx-0" style = "border: none;">
+
+        <div class = "col-md-7 px-0">
+            <%= image_tag @post.get_image, class: "img-fluid w-100 h-100 object-fit:cover;", style: "border-top-left-radius: 3px; border-bottom-left-radius: 3px;" %>
         </div>
 
-        <div class = "col-5">
-            <div class = "row">
-                <div class = "col-3 text-center">
+        <div class = "col-md-5 d-flex flex-column" style = "height: 100%; min-height: 400px;">
+
+            <div class = "p-3 border-bottom d-flex align-items-center justify-content-center">
+                <div class="d-flex align-items-center">
                     <div class="rounded-circle bg-secondary" style="width: 40px; height: 40px;"></div>
-                </div>
-                <div class="col-7 text-center">
                     <strong><%= @post.user.name %></strong>
                 </div>
-                <div class="col-3">
-                    <% if @post.user == current_user %>
-                        <%= link_to "削除", public_post_path(@post), method: :delete %>
-                    <% end %>
-                </div>
+
+                <% if @post.user == current_user %>
+                    <div class="dropdown">
+                        <button class=" btn btn-light text-muted" type="button" data-bs-toggle="dropdown">
+                            <i class="fas fa-ellipsis-h"></i> 
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-end">
+                            <%= link_to "削除", public_post_path(@post), method: :delete %>
+                            <br><%= link_to "編集", edit_public_post_path(@post) %>
+                            <br><%= link_to "戻る", :back %>
+                        </ul>
+                    </div>
+                <% end %>
             </div>
-            <div class = "row">
-                <div class = "col-12">
-                    <%= @post.content %>
+
+            <div class="p-3 flex-grow-1" style="overflow-y: auto; max-height: 400px;">
+                <div class="mb-4 d-flex align-items-start">
+                    <div class="rounded-circle bg-secondary me-3" style="width: 30px; height: 30px; flex-shrink: 0;"></div>
+                    <div>
+                        <strong><%= @post.user.name %></strong>
+                        <div class="text-seconfary mt-1" style="white-space: pre-wrap;"><%= @post.content %></div>
+                        <small class="text-muted"><%= @post.created_at.strftime('%Y/%m/%d') %></small>
+                    </div>               
                 </div>
-            </div>    
-            <p>投稿日：<%= @post.created_at.strftime('%Y/%m/%d') %></p>
+                <hr>
+                    <%= render "public/post_comments/post_comments", post_comments: @post_comments %>
+            </div>
+
+            <div class="p-3 border-top mt-auto bg-light">
+                <%= render "public/post_comments/form", post: @post, post_comment: @post_comment %> 
+            </div>
+
         </div>
     </div>
 </div>

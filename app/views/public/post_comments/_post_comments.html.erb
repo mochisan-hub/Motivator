@@ -1,0 +1,14 @@
+<table class="table">
+  <thead>
+    <tr>
+      <th>comment</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% post_comments.each do |post_comment| %>
+      <tr>
+        <td><%= simple_format(post_comment.comment) %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

@@ -21,6 +21,7 @@ class Public::PostsController < ApplicationController
   def show
     @post = Post.find(params[:id])
     @post_comment = PostComment.new
+    @post_comments = @post.post_comments
   end  
 
   def edit
@@ -29,6 +30,7 @@ class Public::PostsController < ApplicationController
 
   def update
     @post = Post.find(params[:id])
+    
   end
 
   def destroy
@@ -39,7 +41,10 @@ class Public::PostsController < ApplicationController
   end
 
   def search
-    @posts = Post.order(created_at: :desc)
+    @posts = Post.all
+    if params[:keyword].present?@posts = @posts.where("title LIKE ?", "%#{params[:keyword]}%").or(
+      @posts.where("body LIKE ?", "%#{params[:keyword]}%"))
+    end
   end
 
   private

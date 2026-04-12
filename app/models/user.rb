@@ -9,6 +9,24 @@ class User < ApplicationRecord
    has_many :post_comments, dependent: :destroy
    has_many :favorites, dependent: :destroy
 
+   enum membership_states: { active: 0, withdrawn: 1 }
+
+   def active_for_authentication?
+    super && (self.active?)
+   end
+
+   def self.search_for(content, method)
+    if method == 'perfect'
+      User.where(name: content)
+    elsif method == 'forward'
+      User.where('name LIKE ?', content + '%')
+    elsif method == 'backward'
+      User.where('name LIKE ?', '%' + content)
+    else
+      User.where('name LIKE ?', '%' + content + '%')
+    end
+  end
+
    def get_profile_image(width,height)
       unless profile_image.attached?
         file_path = Rails.root.join('app/assets/images/no_image.jpg')
