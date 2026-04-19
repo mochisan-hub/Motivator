@@ -1,4 +1,7 @@
 class Public::PostsController < ApplicationController
+  before_action :authenticate_user!
+  before_action :correct_user, only: [:edit, :update, :destroy]
+
   def new
     @post = Post.new
   end
@@ -42,7 +45,8 @@ class Public::PostsController < ApplicationController
 
   def search
     @posts = Post.all
-    if params[:keyword].present?@posts = @posts.where("title LIKE ?", "%#{params[:keyword]}%").or(
+    if params[:keyword].present?
+      @posts = @posts.where("title LIKE ?", "%#{params[:keyword]}%").or(
       @posts.where("body LIKE ?", "%#{params[:keyword]}%"))
     end
   end
@@ -52,5 +56,8 @@ class Public::PostsController < ApplicationController
     params.require(:post).permit(:image, :content, :start_time, :end_time, training_details_attributes: [:id, :menu_name, :sets, :reps, :_destroy])
   end
 
-
+  def correct_user
+    @post = current_user.posts.find_by(id: params[:id])
+    redirect_to root_path unless @post
+  end
 end

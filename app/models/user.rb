@@ -11,9 +11,9 @@ class User < ApplicationRecord
 
    enum membership_states: { active: 0, withdrawn: 1 }
 
-   def active_for_authentication?
-    super && (self.active?)
-   end
+   #def active_for_authentication?
+   # super && (self.active?)
+   #end
 
    def self.search_for(content, method)
     if method == 'perfect'

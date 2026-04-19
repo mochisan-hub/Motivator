@@ -1,6 +1,6 @@
 class Public::UsersController < ApplicationController
   before_action :authenticate_user!
-  before_action :correct_user, only: [:edit, :update, :ddestroy]
+  before_action :correct_user, only: [:edit, :update, :destroy]
 
   def index
     @user = User.all

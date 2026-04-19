@@ -1,4 +1,5 @@
 class Public::PlansController < ApplicationController
+  before_action :authenticate_user!
   def new
   end
 
