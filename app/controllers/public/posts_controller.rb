@@ -46,8 +46,8 @@ class Public::PostsController < ApplicationController
   def search
     @posts = Post.all
     if params[:keyword].present?
-      @posts = @posts.where("title LIKE ?", "%#{params[:keyword]}%").or(
-      @posts.where("body LIKE ?", "%#{params[:keyword]}%"))
+      @posts = @posts.joins(:user).where("content LIKE ?", "%#{params[:keyword]}%").or(
+      @posts.joins(:user).where("users.name LIKE ?", "%#{params[:keyword]}%"))
     end
   end
 
