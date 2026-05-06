@@ -1,0 +1,7 @@
+<h1>followings</h1>
+<% @users.each do |user| %>
+  <%= user.name %><br>
+<% end %>
+<%= link_to 'show', public_user_path(@user) %> | 
+<%= link_to 'followings', followings_public_user_path(@user) %> | 
+<%= link_to 'followers', followers_public_user_path(@user) %>

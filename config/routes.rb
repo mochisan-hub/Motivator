@@ -4,7 +4,7 @@ Rails.application.routes.draw do
   }
   devise_for :users, controllers: {
     sessions: "public/users/sessions",
-    resistrations: "public/users/registrations"
+    registrations: "public/users/registrations"
   }
 
   namespace :admin do
@@ -19,6 +19,7 @@ Rails.application.routes.draw do
 
   namespace :public do
     get 'homes/about'
+    post 'guest_login', to: 'users#guest_login'
   end
 
   namespace :public do
@@ -45,7 +46,13 @@ Rails.application.routes.draw do
   end
 
   namespace :public do
-    resources :users, only: [:index, :show, :edit, :update, :destroy] 
+    resources :users, only: [:index, :show, :edit, :update, :destroy] do
+      resource :relationships, only: [:create, :destroy]
+      member do
+        get "followings"
+        get "followers"
+      end
+    end
   end
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 

@@ -8,6 +8,10 @@ class User < ApplicationRecord
    has_many :posts, dependent: :destroy
    has_many :post_comments, dependent: :destroy
    has_many :favorites, dependent: :destroy
+   has_many :followings, dependent: :destroy, class_name: "Relationship", foreign_key: :follower_id
+   has_many :following_users, through: :followings, source: :followed
+   has_many :followers, dependent: :destroy, class_name: "Relationship", foreign_key: :followed_id
+   has_many :follower_users, through: :followers, source: :follower
 
    enum membership_states: { active: 0, withdrawn: 1 }
 
@@ -34,4 +38,27 @@ class User < ApplicationRecord
       end
         profile_image.variant(resize_to_limit: [width,height]).processed
    end
+
+  def follow(user)
+    followings.find_or_create_by(followed: user)
+  end
+
+  def unfollow(user)
+    followings.find_by(followed: user)&.destroy
+  end
+
+  def following?(user)
+    following_users.include?(user)
+  end
+
+  def self.guest
+    user = self.find_or_initialize_by(email: "guest@test.com")
+    user.assign_attributes(
+    password: SecureRandom.hex(6),
+    name: "ゲスト"
+    )
+    user.save
+    user
+  end
+
 end

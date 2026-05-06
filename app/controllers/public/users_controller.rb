@@ -1,5 +1,5 @@
 class Public::UsersController < ApplicationController
-  before_action :authenticate_user!
+  before_action :authenticate_user!, only: [:index, :show, :edit, :update, :destroy]
   before_action :correct_user, only: [:edit, :update, :destroy]
 
   def index
@@ -26,6 +26,23 @@ class Public::UsersController < ApplicationController
 
   def destroy
     @user = User.find(params[:id])
+  end
+
+
+  def followings
+      @user = User.find(params[:id])
+      @users = @user.following_users
+  end
+
+  def followers
+      @user = User.find(params[:id])
+      @users = @user.follower_users
+  end
+
+  def guest_login
+    @user = User.guest
+    sign_in(@user)
+    redirect_to root_path
   end
 
   private
