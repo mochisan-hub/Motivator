@@ -10,6 +10,12 @@
 <body>
   <% if admin_signed_in? %>
     <div class="text-right">
+      <%= link_to 'Users', admin_users_path %>
+    </div>
+    <div class="text-right">
+      <%= link_to 'Posts', admin_posts_path %>
+    </div>
+    <div class="text-right">
       <%= link_to 'ログアウト', destroy_admin_session_path, method: :delete %>
     </div>
   <% end %>
